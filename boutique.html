@@ -68,8 +68,8 @@
     </header>
 
         <!-- Boutique -->
-        <div class="image-principale">
-            <img src="./assets/boutique/thumbnail_image0.png" class="image_prime" alt="Image 1">
+        <div class="image-principale" style="position: relative; width: 100%; height: auto; overflow: hidden;">
+            <img src="./assets/boutique/thumbnail_image0.png" class="image_prime" alt="Image 1" style="position: relative; width: 100%; height: auto; overflow: hidden;">
         </div>
         
         <div class="image-container">
@@ -178,9 +178,9 @@
                 transition: transform 0.5s ease;
             }
         
-            /* Zoom effect on hover */
-            .image:hover {
-                transform: scale(1.05);
+            /* Zoom effect on click */
+            .zoomed {
+                transform: scale(1.1);
             }
         
             /* Button container initially hidden */
@@ -205,36 +205,64 @@
                 cursor: pointer;
             }
         
-            /* Show button on hover */
-            .image-container:hover .button-container {
+            /* Show button after click */
+            .clicked .button-container {
                 opacity: 1;
                 visibility: visible;
             }
         </style>
         
-     
-        <!-- Add similar changes for other images -->
-        
-        <script>
-            // JavaScript to handle hover effect
-            const imageContainers = document.querySelectorAll('.image-container'); // add other images as needed
-        
-            imageContainers.forEach(container => {
-                const img = container.querySelector('img');
-                const buttonWrapper = container.querySelector('div');
-        
-                container.addEventListener('mouseenter', () => {
-                    img.style.opacity = '0.7'; // Add opacity to image
-                    buttonWrapper.style.opacity = '1'; // Make button visible
-                });
-        
-                container.addEventListener('mouseleave', () => {
-                    img.style.opacity = '1'; // Remove opacity from image
-                    buttonWrapper.style.opacity = '0'; // Hide button
-                });
-            });
+
             
-        </script>
+<script>
+    // JavaScript to handle the click effect
+    const imageContainers = document.querySelectorAll('.image-container'); // Add other images as needed
+    let previousClickedContainer = null; // Store the previously clicked container
+
+    imageContainers.forEach(container => {
+        const img = container.querySelector('img');
+        const buttonWrapper = container.querySelector('.button-container');
+        
+        // Toggle zoom and button visibility on click
+        container.addEventListener('click', () => {
+            // If the container was clicked again (it already has the 'clicked' class)
+            if (container.classList.contains('clicked')) {
+                // Reset the current container's effects
+                img.style.opacity = '1'; // Reset the opacity
+                buttonWrapper.style.opacity = '0'; // Hide the button
+                container.classList.remove('clicked'); // Remove the 'clicked' class
+                img.classList.remove('zoomed'); // Remove the zoom effect
+
+                // Reset the previousClickedContainer to null because it was reset
+                previousClickedContainer = null;
+            } else {
+                // If it's a new container, reset the previous container's state (if any)
+                if (previousClickedContainer && previousClickedContainer !== container) {
+                    const previousImg = previousClickedContainer.querySelector('img');
+                    const previousButtonWrapper = previousClickedContainer.querySelector('.button-container');
+                    
+                    previousImg.style.opacity = '1'; // Reset the opacity of the previous image
+                    previousButtonWrapper.style.opacity = '0'; // Hide the button of the previous container
+                    previousClickedContainer.classList.remove('clicked'); // Remove 'clicked' class from previous container
+                    previousImg.classList.remove('zoomed'); // Remove zoom effect from previous image
+                }
+
+                // Apply the effects to the clicked container
+                container.classList.add('clicked');  // Add the "clicked" class
+                img.classList.add('zoomed');         // Apply zoom effect to image
+                img.style.opacity = '0.7';           // Add opacity to the clicked image
+                buttonWrapper.style.opacity = '1';   // Make button visible
+
+                // Update the previousClickedContainer to the current one
+                previousClickedContainer = container;
+            }
+        });
+    });
+</script>
+
+
+
+        
     
             <!-- Copyright -->
             <div class="text-center mt-12">
