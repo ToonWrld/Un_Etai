@@ -210,13 +210,6 @@
                 opacity: 1;
                 visibility: visible;
             }
-
-              /* Mobile-specific styles */
-    @media (max-width: 768px) {
-        /* Simulate hover on touch for mobile */
-        .image-container.touch-hover .button-container {
-            opacity: 1;
-            visibility: visible;}}
         </style>
         
      
@@ -241,24 +234,6 @@
                 });
             });
             
-        </script>
-        <script>
-            // Add event listeners for touch events on mobile
-            const images = document.querySelectorAll('.image-container');
-        
-            images.forEach(imageContainer => {
-                imageContainer.addEventListener('touchstart', () => {
-                    imageContainer.classList.add('touch-hover');
-                });
-        
-                imageContainer.addEventListener('touchend', () => {
-                    imageContainer.classList.remove('touch-hover');
-                });
-        
-                imageContainer.addEventListener('touchcancel', () => {
-                    imageContainer.classList.remove('touch-hover');
-                });
-            });
         </script>
     
             <!-- Copyright -->
